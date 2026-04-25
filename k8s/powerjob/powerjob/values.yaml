@@ -1,0 +1,124 @@
+# Default values for powerjob.
+replicaCount: 1
+
+# 全局镜像拉取凭证（例如阿里云 ACR 私有仓库）
+imagePullSecrets: []
+# 使用示例:
+# imagePullSecrets:
+#   - name: aliyun.acr.vpc
+
+nameOverride: ""
+fullnameOverride: ""
+
+# MySQL 配置
+mysql:
+  enabled: true
+  image:
+    repository: crpi-2ht4o3mf8mfcxio7-vpc.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/powerjob-mysql
+    tag: latest
+    pullPolicy: IfNotPresent
+  port: 3306
+  auth:
+    username: root
+    password: "No1Bug2Please3!"
+  database: powerjob-daily
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: ""   # 空字符串表示使用静态 PV 或默认 StorageClass
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  commandArgs:
+    - "--lower_case_table_names=1"
+
+# PowerJob Server 配置
+server:
+  enabled: true
+  image:
+    repository: crpi-2ht4o3mf8mfcxio7-vpc.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/powerjob-server
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 10086     # 内部通信端口
+    httpPort: 7700  # Web 控制台端口
+  ports:
+    - name: server
+      containerPort: 10086
+      servicePort: 10086
+    - name: http
+      containerPort: 7700
+      servicePort: 7700
+    - name: dump
+      containerPort: 10010
+      servicePort: 10010
+    - name: akka
+      containerPort: 10077
+      servicePort: 10077
+  env:
+    JVMOPTIONS: "-Xmx512m"
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# PowerJob Worker Sample 配置
+worker:
+  enabled: true
+  image:
+    repository: crpi-2ht4o3mf8mfcxio7-vpc.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/powerjob-worker-samples
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    enabled: false   # Worker 通常不需要暴露 Service
+  ports:
+    - name: http
+      containerPort: 8081
+      servicePort: 8081
+    - name: worker
+      containerPort: 27777
+      servicePort: 27777
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# Ingress 配置 (用于暴露 Server Web 控制台)
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: "letsencrypt"
+  hosts:
+    - host: powerjob.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: powerjob-tls
+  #    hosts:
+  #      - powerjob.example.com
+
+initContainer:
+  image: crpi-2ht4o3mf8mfcxio7-vpc.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/busybox:latest
+  imagePullPolicy: IfNotPresent
