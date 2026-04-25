@@ -1,0 +1,6 @@
+apiVersion: v2
+name: powerjob
+description: A Helm chart for PowerJob distributed job scheduling platform
+type: application
+version: 0.1.0
+appVersion: "latest"

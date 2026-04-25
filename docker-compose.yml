@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: No1Bug2Please3!
     restart: always
     container_name: powerjob-mysql
-    image: powerjob/powerjob-mysql:latest
+    image: crpi-2ht4o3mf8mfcxio7.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/powerjob-mysql:latest
     ports:
       - "3307:3306"
     volumes:
@@ -19,7 +19,7 @@ services:
 
   powerjob-server:
     container_name: powerjob-server
-    image: powerjob/powerjob-server:latest
+    image: crpi-2ht4o3mf8mfcxio7.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/powerjob-server:latest
     restart: always
     depends_on:
       - powerjob-mysql
@@ -36,7 +36,7 @@ services:
 
   powerjob-worker-samples:
     container_name: powerjob-worker-samples
-    image: powerjob/powerjob-worker-samples:latest
+    image: crpi-2ht4o3mf8mfcxio7.cn-shenzhen.personal.cr.aliyuncs.com/dous_librarys/powerjob-worker-samples:latest
     restart: always
     depends_on:
       - powerjob-mysql
