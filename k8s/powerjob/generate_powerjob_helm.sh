@@ -123,11 +123,14 @@ worker:
 
 # Ingress 配置 (用于暴露 Server Web 控制台)
 ingress:
-  enabled: false
+  enabled: true
   className: "test-ingress-controller"
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # cert-manager.io/cluster-issuer: "letsencrypt"
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
   hosts:
     - host: powerjob.testk8s.idousong.com
       paths:
