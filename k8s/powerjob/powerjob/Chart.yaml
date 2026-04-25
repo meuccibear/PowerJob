@@ -1,6 +1,0 @@
-apiVersion: v2
-name: powerjob
-description: PowerJob distributed job scheduling platform
-type: application
-version: 0.2.0
-appVersion: "5.1.2"
