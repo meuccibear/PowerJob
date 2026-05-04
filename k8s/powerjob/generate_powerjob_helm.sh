@@ -387,7 +387,7 @@ spec:
             - name: JVMOPTIONS
               value: {{ .Values.server.env.JVMOPTIONS | quote }}
             - name: PARAMS
-              value: "--oms.mongodb.enable=false --spring.datasource.core.jdbc-url=jdbc:mysql://{{ include "powerjob.mysql.fullname" . }}:{{ .Values.mysql.port }}/{{ .Values.mysql.database }}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&user={{ .Values.mysql.auth.username }}&password={{ .Values.mysql.auth.password }}"
+              value: "--oms.auth.initiliaze.admin.password=idousong123! --oms.mongodb.enable=false --spring.datasource.core.jdbc-url=jdbc:mysql://{{ include "powerjob.mysql.fullname" . }}:{{ .Values.mysql.port }}/{{ .Values.mysql.database }}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&user={{ .Values.mysql.auth.username }}&password={{ .Values.mysql.auth.password }}"
           ports:
             {{- range .Values.server.ports }}
             - containerPort: {{ .containerPort }}
