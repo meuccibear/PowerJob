@@ -506,7 +506,7 @@ spec:
             - |
               # Worker 连接 Server 的内部通信端口 10086
               java -Xmx512m -jar /powerjob-worker-samples.jar \
-                --powerjob.worker.server-address={{ include "powerjob.server.fullname" . }}:10086 \
+                --powerjob.worker.server-address={{ include "powerjob.server.fullname" . }}:7700 \
                 --powerjob.worker.port=27777
           ports:
             {{- range .Values.worker.ports }}
