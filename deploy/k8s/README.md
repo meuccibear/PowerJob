@@ -1,3 +1,10 @@
+
+
+## 1.安装私有仓库
+
+```shell
+
+cat > "./aliyun.acr.vpc.secret.yaml" << 'EOF'
 apiVersion: v1
 data:
   .dockerconfigjson: >-
@@ -7,3 +14,14 @@ kind: Secret
 metadata:
   name: aliyun.acr.vpc
 type: kubernetes.io/dockerconfigjson
+
+EOF
+
+# 使用您提供的 Secret 文件
+kubectl apply -f aliyun.acr.vpc.secret.yaml
+
+```
+
+## 2.[安装 Provisioner](Provisioner/README.md)
+
+## 3.[安装 powerjob](powerjob/README.md)
