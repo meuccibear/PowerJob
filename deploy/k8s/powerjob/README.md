@@ -20,6 +20,11 @@ helm install powerjob ./powerjob   --namespace powerjob   --create-namespace   -
 # 更新 powerjob helm 
 helm upgrade --install powerjob ./powerjob -n powerjob --create-namespace   --set imagePullSecrets[0].name=aliyun.acr.vpc
 
+
+# 查看模版结果
+helm template powerjob ./powerjob   --namespace powerjob   --create-namespace   --set imagePullSecrets[0].name=aliyun.acr.vpc
+
+
 ```
 
 ## 3.删除
